@@ -16,10 +16,14 @@
 # limitations under the License.
 #
 
-gem_package "runit-man" do
-  if node[:runit_man][:version] != "latest"
-    version node[:runit_man][:version]
+node['runit_man']['packages'].each do |p,v|
+  package p do
+    version v
   end
+end
+
+gem_package "runit-man" do
+  version node['runit_man']['version']
   action :install
 end
 gem_package "rainbows"
